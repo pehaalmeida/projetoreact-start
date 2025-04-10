@@ -9,14 +9,18 @@ class App extends Component {
   }; 
 
   componentDidMount() {
+   this.loadPosts();
   }
 
-  componentDidUpdate() {
+  loadPosts = async () => {
+    const postsResponse = fetch('https://jsonplaceholder.typicode.com/posts')
+    const photosResponse = fetch('https://jsonplaceholder.typicode.com/photos')
 
-  }
+    const [posts] = await Promise.all([postsResponse]);
 
-  componentWillUnmount() {
+    const postsJson = await posts.json();
 
+    this.setState({ posts: postsJson });
   }
 
 
@@ -24,18 +28,24 @@ class App extends Component {
     const { posts } = this.state;
      
     return (
-      <div className="App">
+      <section className='container'>
+        <div className="posts">
   
-        {posts.map(post =>
-        (
-          <div key={post.id}>
-            <h1>{post.title}</h1>
-            <p>{post.body}</p>
-          </div>
-        )
-        )}
+          {posts.map(post =>
+          (
+            <div className='post'>
+                <div key={post.id} className='post-content'>
+                <h1>{post.title}</h1>
+                <p>{post.body}</p>
+              </div>
+            </div>
+            
+          )
+          )}
 
-      </div>
+        </div>
+      </section>
+
     );
   }
 }
