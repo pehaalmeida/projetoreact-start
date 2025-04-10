@@ -40,7 +40,6 @@ class App extends Component {
     this.setState({ posts: postsAndPhotos });
   }
 
-
   render() {
     const { posts } = this.state;
      
